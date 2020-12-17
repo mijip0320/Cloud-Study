@@ -33,6 +33,13 @@ kubectl create # 상태 생성
 
   쿠버네티스는 상태를 관리하기 위한 대상을 오브젝트로 정의한다.
 
+> 쿠버네티스의 YAML 파일은 일반적으로  apiVersion, kind, metadata, spec 네가지 항목으로 구성된다
+>
+> - apiVersion : YAML 파일에서 정의한 오브젝트의 API 버전을 나타냅니다. 오브젝트의 종류 및 개발 성숙도에 따라  apiVersion의 설정값이 달라질 수 있다
+> - kind : 리소스의 종류를 나타낸다. 
+> - metadata : 라벨, 주석, 이름 등과 같은 리소스의 부가 정보들을 입력한다. 
+> - spec : 리소스를 생성하기 위한 자세한 정보를 입력합니다. 
+
 
 
 #### 1. Pod
@@ -43,11 +50,54 @@ kubectl create # 상태 생성
 
 
 
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+	name: my-nginx-pod
+spec:
+	containers:
+	- name: my-nginx-container
+	  image: nginx:latest
+	  ports:
+	  	- containerPort: 80
+	  	  protocol: TCP
+```
+
+
+
+
+
 #### 2. ReplicaSet
 
 <img src="https://subicura.com/assets/article_images/2019-05-19-kubernetes-basic-1/replicaset.png" style="zoom:50%;" />
 
   **Pod**를 여러 개(한 개 이상) 복제하여 관리하는 오브젝트다. **Pod**를 생성하고 개수를 유지하려면 반드시 **ReplicaSet**을 사용해야 한다. **ReplicaSet**은 복제할 개수, 개수를 체크할 라벨 선택자, 생성할 **Pod**의 설정값(템플릿) 등을 가지고 있다. 직접적으로 **ReplicaSet**을 사용하기보다는 **Deployment** 등 다른 오브젝트에 의해서 사용되는 경우가 많다
+
+
+
+```yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+	name: replicaset-nginx
+spec:
+	replicas: 3
+	selector:
+		matchLabels:
+			app: my-nginx-pods-label
+	template:
+		metadata:
+			name: my-nginx-pod
+			labels:
+				app: my-nginx-pods-label
+		spec:
+			containers:
+				- name: nginx
+				  image: nginx:latest
+				  ports:
+				  	- containerPort: 80
+```
 
 
 
@@ -260,3 +310,52 @@ spec:
 - Kubelet은 자신의 Node에 할당되었지만 아직 생성되지 않은 Pod가 있는지 체크한다.
 - 생성되지 않은 Pod가 있으면 명세를 보고 Pod를 생성한다.
 - Pod의 상태를 주기적으로 API Server에 전달한다.
+
+
+
+
+
+## 인그레스(Ingress)
+
+  서비스 오브젝트가 외부 요청을 받아들이기 위한 것이었다면 **인그레스**는 외부 요청을 어떻게 처리할 것인지 네트워크 7계층 레벨에서 정의하는 쿠버네티스 오브젝트다. 외부 요청에 대한 처리 규칙을 쿠버네티스 자체의 기능으로 편리하게 관리할 수 있다는 것이 **인그레스**의 핵심이다.
+
+  예를 들면, 디플로이먼트가 3개 생성돼 있을 때, 서비스마다 세부적인 설정, 보안 연결 등을 일일이 설정해 주지 않고 인그레스에 설정하여 요청은 인그레스에서 정의한 규칙에 따라 처리된 뒤 적절한 디플로이먼트의 포드로 전달된다.
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FlnXym%2FbtqBj6rZveA%2FUKNt7GykAnGuC5YQsC0jTK%2Fimg.png" style="zoom:67%;" />
+
+
+
+
+
+###  인그레스 오브젝트가 담당할 수있는 기본적인 기능
+
+- 외부 요청의 라우팅 : /apple, /apple/red 등과 같이 특정 경로로 들어온 요청을 어떠한 서비스로 전달할지 정의하는 라우팅 규칙을 설정할 수 있다
+- 가상 호스트 기반의 요청 처리 : 같은 IP에 대해 다른 도메인 이름으로 요청이 도착했을 때, 어떻게 처리할 것인지 정의할 수 있다
+- SSL / TLS 보안 연결 처리 : 여러 개의 서비스로 요청을 라우팅할 때, 보안 연결을 위한 인증서를 쉽게 적용할 수 있다.
+
+
+
+> 인그레스는 외부로부터 들어오는 요청에 대한 로드밸런싱, TLS/SSL 인증서 처리, 도메인 기반 가상 호스팅 제공, 특정 HTTP 경로의 라우팅 등의 규칙들을 **정의** 해 둔 자원이며, 이런 규칙들을 실제로 동작해주는건 **인그레스 컨트롤러** 다. 즉, 실제로 외부 요청을 받아들이는 것은 인그레스 컨트롤러 서버이며, 이 서버가 인그레스 규칙을 로드해 사용한다. 대표적으로는 **Nginx 웹 서버 인그레스 컨트롤러** 가 있다.
+
+
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+	name: minimal-ingress
+	annotations:
+		nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+	rules:
+	- http:
+		paths:
+		- path: /testpath
+		  pathType: Prefix
+		  backend:
+		  	service:
+		  		name: test
+		  		port:
+		  			number: 80
+```
+
