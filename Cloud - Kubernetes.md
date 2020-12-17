@@ -171,7 +171,7 @@ spec:
 
 
 
-###### 3. 스케쥴러 kube-scheduler
+###### 3. 스케줄러 kube-scheduler
 
   할당되지 않은 Pod를 여러가지 조건(필요한 자원, 라벨)에 따라 적절한 노드 서버에 할당해주는 모듈이다.
 
@@ -179,14 +179,84 @@ spec:
 
 ###### 4. 큐브 컨트롤러 kube-controller-manager
 
-  
+​    쿠버네티스에 있는 거의 모든 오브젝트의 상태를 관리한다. 오브젝트별로 철저하게 분업화되어 Deployment는 ReplicaSet을 생성하고 ReplicaSet은 Pod를 생성하고 Pod는 스케줄러가 관리하는 식이다.
+
+
 
 ###### 5. 클라우드 컨트롤러 cloud-controller-manager
 
-
+  AWS, GCE, Azure 등 클라우드에 특화된 모듈이다. 노드를 추가 / 삭제하고 로드 밸런서를 연결하거나 볼륨을 붙일 수 있다. 각 클라우드 업체에서 인터페이스에 맞게 구현하면 되기 때문에 확장성이 좋고 많은 곳에서 자체 모듈을 만들어 제공하고 있다.
 
 
 
 #### Node
 
   노드 서버는 마스터 서버와 통신하면서 필요한 Pod를 생성하고 네트워크와 볼륨을 설정한다. 실제 컨테이너들이 생성되는 곳으로 수백, 수천대로 확장할 수 있다. 각각의 서버에 라벨을 붙여 사용목적을 정의할 수 있다.
+
+
+
+##### Node 구성요소
+
+<img src="https://subicura.com/assets/article_images/2019-05-19-kubernetes-basic-1/kubernetes-node.png" style="zoom:33%;" />
+
+###### 1. 큐블릿 kubelet
+
+  노드에 할당된 **Pod**의 생명주기를 관리한다. Pod를 생성하고 Pod 안의 컨테이너에 이상이 없는지 확인하면서 주기적으로 마스터에 상태를 전달한다. API 서버의 요청을 받아 컨테이너의 로그를 전달하거나 특정 명령을 대신 수행한다.
+
+
+
+###### 2. 프록시 [kube-proxy](https://github.com/souvenir718/Cloud-Study/blob/master/Cloud%20-%20kube-proxy.md)
+
+  **Pod**로 연결되는 네트워크를 관리한다. TCP, UDP, SCTP 스트림을 포워딩하고 여러 개의 Pod를 라운드로빈 형태로 묶어 서비스를 제공할 수 있다. 초기에는 kube-proxy 자체가 프록시 서버로 동작하면서 실제 요청을 프록시 서버가 받고 각 Pod에 전달해 주었는데 시간이 지나면서 **iptables**를 설정하는 방식으로 변경되었다. iptables에 등록된 규칙이 많아지면서 느려지는 문제 때문에 최근 **IPVS**를 지원하기 시작했다.
+
+> **iptables** : 리눅스 상에서 방화벽을 설정하는 도구
+>
+> **IPVS** : 리눅스 커널에 있는 L4 로드밸런싱 기술로 Netfilter에 포함되어 있다.
+
+
+
+###### 3. 추상화
+
+  쿠버네티스는 CRI(Container runtime interface)를 구현한 다양한 컨테이너 런타임을 지원한다. containerd(사실상 도커), rkt, CRI-O등이 있다.
+
+
+
+
+
+## 하나의 **Pod**가 생성되는 과정
+
+  관리자가 애플리케이션을 배포하기 위해 **ReplicaSet**을 생성하면 다음과 같은 과정을 거쳐 **Pod**를 생성한다.
+
+<img src="https://subicura.com/assets/article_images/2019-05-19-kubernetes-basic-1/create-replicaset.png" style="zoom:35%;" />
+
+  흐름을 보면 각 모듈은 서로 통신하지 않고 오직 **API Server**와 통신하는 것을 알 수 있다. **API Server**를 통해 **etcd**에 저장된 상태를 체크하고 현재 상태와 원하는 상태가 다르면 필요한 작업을 수행한다. 각 모듈이 하는 일을 보면 다음과 같다.
+
+
+
+### 1. kubectl
+
+- ReplicaSet 명세를 yaml 파일로 정의하고 kubectl 도구를 이용하여 API Server에 명령을 전달한다.
+- API Server는 새로운 ReplicaSet Object를 etcd에 저장한다.
+
+
+
+### 2. Kube Controller
+
+- Kube Controller에 포함된 ReplicaSet Controller가 ReplicaSet을 감시하다가 ReplicaSet에 정의된 Label Selector 조건을 만족하는 Pod가 존재하는지 체크한다.
+- 해당하는 Label의 Pod가 없으면 ReplicaSet의 Pod 템플릿을 보고 새로운 Pod를 생성한다.
+- 생성은 API Server에 전달하고 API Server는 etcd에 저장한다.
+
+
+
+### 3. Scheduler
+
+- Scheduler는 할당되지 않은 Pod가 있는지 체크한다.
+- 할당되지 않은 Pod가 있으면 조건에 맞는 Node를 찾아 Pod를 할당한다.
+
+
+
+### 4. Kubelet
+
+- Kubelet은 자신의 Node에 할당되었지만 아직 생성되지 않은 Pod가 있는지 체크한다.
+- 생성되지 않은 Pod가 있으면 명세를 보고 Pod를 생성한다.
+- Pod의 상태를 주기적으로 API Server에 전달한다.
