@@ -14,7 +14,7 @@
 
 
 
-## containerd:runner:
+## containerd<img src="https://camo.githubusercontent.com/ce52ba4f81cf2a2f218567cb2eaed08a9a1a6968b18ba3618dec889f94018b24/68747470733a2f2f636f6e7461696e6572642e696f2f696d672f6c6f676f732f69636f6e2f626c61636b2f636f6e7461696e6572642d69636f6e2d626c61636b2e706e67" style="zoom:5%;" />
 
 > 업계 표준 컨테이너 런타임, runC를 제어하는 데몬으로 Docker engine에 내장됨
 >
@@ -26,9 +26,11 @@
 
 
 
-## Jaeger:watch:
+## Jaeger​​<img src="https://www.jaegertracing.io/img/jaeger-icon-color.png" style="zoom:3%;" />
 
 > 분산 서비스 간 트랜잭션을 추적하는 오픈소스 소프트웨어로 복잡한 마이크로서비스 환경을 모니터링하고 문제를 해결하는 데 사용
+
+  ![그림입니다.  원본 그림의 이름: CLP000045880003.bmp  원본 그림의 크기: 가로 3360pixel, 세로 1859pixel](https://www.jaegertracing.io/img/trace-detail-ss.png)  
 
 ### 분산 추적?
 
@@ -55,11 +57,13 @@
 
 
 
-## CoreDNS:computer_mouse:
+## CoreDNS<img src="https://avatars3.githubusercontent.com/u/21110084?s=400&v=4" style="zoom:10%;" />
+
+> 쿠버네티스 클러스터의 DNS 역할을 수행할 수 있는, 유연하고 확장 가능한 DNS 서버
+
+- 사용자는 기존 디플로이먼트인 kube-dns를 교체하거나, 클러스터를 배포하고 업그레이드하는 kubeadm과 같은 툴을 사용하여 클러스터 안의 kube-dns 대신 CoreDNS를 사용할 수 있음
 
 
 
-
-
-## Kubernetes:whale2:
+## Kubernetes<img src="https://download.logo.wine/logo/Kubernetes/Kubernetes-Logo.wine.png" style="zoom:5%;" />
 
