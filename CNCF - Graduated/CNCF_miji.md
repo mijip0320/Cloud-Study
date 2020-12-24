@@ -62,8 +62,12 @@
 > 쿠버네티스 클러스터의 DNS 역할을 수행할 수 있는, 유연하고 확장 가능한 DNS 서버
 
 - 사용자는 기존 디플로이먼트인 kube-dns를 교체하거나, 클러스터를 배포하고 업그레이드하는 kubeadm과 같은 툴을 사용하여 클러스터 안의 kube-dns 대신 CoreDNS를 사용할 수 있음
+- Go 언어로 작성됨
+- Kubernetes v1.13에서 기본 DNS로 사용
 
 
 
 ## Kubernetes<img src="https://download.logo.wine/logo/Kubernetes/Kubernetes-Logo.wine.png" style="zoom:5%;" />
+
+[도커와 쿠버네티스 정리](https://github.com/souvenir718/Cloud-Study/blob/master/Cloud/Docker_Kubernetes_miji.md)
 
