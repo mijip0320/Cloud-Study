@@ -6,11 +6,15 @@
 
 ![](https://dtd31o1ybbmk8.cloudfront.net/photos/60a94cf4790ea7d894db447af41522ec/thumb.jpg)
 
+
+
 금융위원회는 이중 심사가 보류된 경남은행·삼성카드·하나금융투자·하나은행·하나카드·핀크 6개사를 제외한 나머지 29개사에 대한 예비허가 여부를 2020년 12월 16일 정례회의에서 공개 예정이며 2021년 1월 일괄 허가한다는 방침이다.
 
 출처 : [디지털투데이 (DigitalToday)(http://www.digitaltoday.co.kr)](http://www.digitaltoday.co.kr/news/articleView.html?idxno=255511)
 
 
+
+기사 참고
 
 
 
