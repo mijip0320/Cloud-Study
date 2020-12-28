@@ -4,8 +4,6 @@ https://m.etnews.com/20180913000324?obj=Tzo4OiJzdGRDbGFzcyI6Mjp7czo3OiJyZWZlcmVy
 
 
 
-![image-20201228125442385](C:\Users\INNOGRID\AppData\Roaming\Typora\typora-user-images\image-20201228125442385.png)
-
 
 
 - 영국의 마이덱스 
