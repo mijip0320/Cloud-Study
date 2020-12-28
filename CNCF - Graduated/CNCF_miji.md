@@ -14,9 +14,9 @@
 
 
 
-## containerd
+<<<<<<< HEAD
 
-<img src="https://camo.githubusercontent.com/ce52ba4f81cf2a2f218567cb2eaed08a9a1a6968b18ba3618dec889f94018b24/68747470733a2f2f636f6e7461696e6572642e696f2f696d672f6c6f676f732f69636f6e2f626c61636b2f636f6e7461696e6572642d69636f6e2d626c61636b2e706e67" style="zoom:5%;" />
+## containerd<img src="https://camo.githubusercontent.com/ce52ba4f81cf2a2f218567cb2eaed08a9a1a6968b18ba3618dec889f94018b24/68747470733a2f2f636f6e7461696e6572642e696f2f696d672f6c6f676f732f69636f6e2f626c61636b2f636f6e7461696e6572642d69636f6e2d626c61636b2e706e67" width="50" height="50" />
 
 > 업계 표준 컨테이너 런타임, runC를 제어하는 데몬으로 Docker engine에 내장됨
 >
@@ -28,7 +28,7 @@
 
 
 
-## Jaeger​​<img src="https://www.jaegertracing.io/img/jaeger-icon-color.png" style="zoom:3%;" />
+## Jaeger​​<img src="https://www.jaegertracing.io/img/jaeger-icon-color.png" width="50" height="50" />
 
 > 분산 서비스 간 트랜잭션을 추적하는 오픈소스 소프트웨어로 복잡한 마이크로서비스 환경을 모니터링하고 문제를 해결하는 데 사용
 
@@ -59,7 +59,7 @@
 
 
 
-## CoreDNS<img src="https://avatars3.githubusercontent.com/u/21110084?s=400&v=4" style="zoom:10%;" />
+## CoreDNS<img src="https://avatars3.githubusercontent.com/u/21110084?s=400&v=4" width="50" height="50" />
 
 > 쿠버네티스 클러스터의 DNS 역할을 수행할 수 있는, 유연하고 확장 가능한 DNS 서버
 
@@ -69,7 +69,7 @@
 
 
 
-## Kubernetes<img src="https://download.logo.wine/logo/Kubernetes/Kubernetes-Logo.wine.png" style="zoom:5%;" />
+## Kubernetes<img src="https://download.logo.wine/logo/Kubernetes/Kubernetes-Logo.wine.png" width="80" height="50" />
 
 [도커와 쿠버네티스 정리](https://github.com/souvenir718/Cloud-Study/blob/master/Cloud/Docker_Kubernetes_miji.md)
 
