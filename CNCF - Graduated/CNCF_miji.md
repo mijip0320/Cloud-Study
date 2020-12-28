@@ -41,6 +41,8 @@
 - 애플리케이션에서의 단 한번의 호출로 상호 작용하는 수십 개의 서로 다른 서비스가 실행될 수도 있음. 어떤 문제가 발생하거나 요청의 실행 속도가 느릴 경우 개발자와 엔지니어가 문제를 파악하기 위해서는 모든 연결을 추적할 수 있는 방식이 필요 -> **분산 추적이 사용됨**
 - Jaeger는 분산 추적을 사용해 다양한 마이크로서비스의 요청 경로를 추적하기 때문에 모호하게 추측하는 것이 아니라 실제 요청 흐름을 *시각적으로 확인 가능*
 - 분산 트랜잭션을 모니터링하고, 성능과 대기 시간을 최적화하고, 문제 해결을 위한 근본 원인 분석(Root Cause Analysis, RCA)을 수행할 툴을 갖추고 있음
+- 차량 공유 서비스 기업인 **"Uber"**에서 2015년 Jaeger를 오픈소스 프로젝트로 개발
+- 2017년도에 CNCF Incubation 프로젝트로 채택, 2019년에는 정식 프로젝트로 승인
 
 ### 용어 및 구성 요소
 
@@ -57,6 +59,8 @@
 - **Query**: 스토리지에서 추적을 검색하는 서비스
 - **Jaeger Console**: 분산된 추적 데이터를 시각화하는 사용자 인터페이스
 
+출처: [RedHat](https://www.redhat.com/ko/jaeger%EB%9E%80), [](https://www.redhat.com/ko/jaeger%EB%9E%80)
+
 
 
 ## CoreDNS<img src="https://avatars3.githubusercontent.com/u/21110084?s=400&v=4" width="50" height="50" />
@@ -66,6 +70,61 @@
 - 사용자는 기존 디플로이먼트인 kube-dns를 교체하거나, 클러스터를 배포하고 업그레이드하는 kubeadm과 같은 툴을 사용하여 클러스터 안의 kube-dns 대신 CoreDNS를 사용할 수 있음
 - Go 언어로 작성됨
 - Kubernetes v1.13에서 기본 DNS로 사용
+
+`kubeadm`으로 설치하는 경우 CoreDNS가 설치됨
+
+```c
+$ kubectl get po -n kube-system -l k8s-app=kube-dns
+
+NAME                       READY   STATUS    RESTARTS   AGE
+coredns-6955765f44-qmfm4   1/1     Running   0          15h
+coredns-6955765f44-svftc   1/1     Running   0          15h
+```
+
+
+
+CoreDNS의 여러가지 기능은 `Corefile`설정 파일에 원하는 것들만 플러그인처럼 추가할 수 있음
+
+```
+$ kubectl describe cm -n kube-system coredns
+
+Name:         coredns
+Namespace:    kube-system
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+Corefile:
+----
+.:53 {
+    errors
+    health {
+       lameduck 5s
+    }
+    ready
+    kubernetes cluster.local in-addr.arpa ip6.arpa {
+       pods insecure
+       fallthrough in-addr.arpa ip6.arpa
+       ttl 30
+    }
+    prometheus :9153
+    forward . /etc/resolv.conf
+    cache 30
+    loop
+    reload
+    loadbalance
+}
+```
+
+- `errors`: 에러가 발생하면 stdout으로 보냄
+- `health`: `http://localhost:8080/health`를 통해 CoreDNS 상태를 확인할 수 있음.
+- `ready`: 준비 요청이 되어 있는지 확인하기 위해 포트 `http://localhost:8181/ready`로 HTTP 요청을 보니면 200 OK가 반환.
+- `kubernetes`: 쿠버네티스의 Service 도메인과 POD IP 기반으로 DNS 쿼리를 응답
+- `ttl` 설정: 타임아웃 제어
+- `prometheus`: 지정포트(9153)로 프로메테우스 포맷의 메트릭 정보를 확인 가능
+
+출처: [coredns](https://jonnung.dev/kubernetes/2020/05/11/kubernetes-dns-about-coredns/)
 
 
 
