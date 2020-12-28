@@ -2,6 +2,58 @@
 
 
 
+## 마이데이터 진행 기업들 현황 
+
+![](https://dtd31o1ybbmk8.cloudfront.net/photos/60a94cf4790ea7d894db447af41522ec/thumb.jpg)
+
+
+
+금융위원회는 이중 심사가 보류된 경남은행·삼성카드·하나금융투자·하나은행·하나카드·핀크 6개사를 제외한 나머지 29개사에 대한 예비허가 여부를 2020년 12월 16일 정례회의에서 공개 예정이며 2021년 1월 일괄 허가한다는 방침이다.
+
+출처 : [디지털투데이 (DigitalToday)(http://www.digitaltoday.co.kr)](http://www.digitaltoday.co.kr/news/articleView.html?idxno=255511)
+
+
+
+기사 참고
+
+
+
+뱅크샐러드
+
+https://biz.chosun.com/site/data/html_dir/2020/06/20/2020062001184.html
+
+
+
+우리은행 
+
+http://www.bikorea.net/news/articleView.html?idxno=28864
+
+
+
+신한은행 -  마이샵 서비스
+
+https://www.mediasr.co.kr/news/articleView.html?idxno=63710
+
+
+
+자본시장연구원 - 국내외 마이데이터 도입 현황 및 시사점
+
+https://www.kcmi.re.kr/report/report_view.php?report_no=1059&s_report_type=
+
+
+
+NH의 마이디
+
+https://paxnetnews.com/articles/68014
+
+
+
+국민은행
+
+https://www.seoul.co.kr/news/newsView.php?id=20201201020005
+
+
+
 ## KT 금융 클라우드 패키지 서비스
 
 ![](https://newsimg.sedaily.com/2020/08/17/1Z6M5ZWIJU_1.jpg)
@@ -55,4 +107,6 @@ KB국민카드는 개정된 ‘데이터 3법’의 본격적인 시행을 앞�
 이 앱은 ▲매일 업데이트 되는 금융, 소비, 혜택 관련 정보를 한 눈에 확인할 수 있는 ‘투데이’ ▲소비 스타일 기반 맞춤형 혜택과 혜택 관련 뉴스 등을 제공하는 ‘혜택’ ▲고객의 금융 자산 현황 확인과 자산 영역별 조언도 받을 수 있는 ‘금융’ ▲고객 계좌와 카드에서 발생하는 수입∙지출 현황을 타임라인으로 볼 수 있는 ‘소비 매니저’ 등 4개 메뉴로 구성됐다.
 
 출처 : 조선비즈(https://biz.chosun.com/site/data/html_dir/2020/08/04/2020080401093.html)
+
+
 
