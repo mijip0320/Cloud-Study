@@ -42,3 +42,8 @@ https://m.etnews.com/20180913000324?obj=Tzo4OiJzdGRDbGFzcyI6Mjp7czo3OiJyZWZlcmVy
 
 출처 : [디지털투데이 (DigitalToday)(http://www.digitaltoday.co.kr)](http://www.digitaltoday.co.kr/news/articleView.html?idxno=203476)
 
+
+
+ 마이데이터는 **정부가 운영하는** 자기정보저장소(PDS)에 저장되어 수정이 불가능하고 본인 외에는 조회,활용이 차단되는 등 데이터의 신뢰성과 안전성을 보장하는 기능도 갖출 계획
+
+https://www.startuptoday.co.kr/news/articleView.html?idxno=62879
